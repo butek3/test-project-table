@@ -1,26 +1,60 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <transition-table id="app"/>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import TransitionTable from "@/blocks/transactions-table/transactions-table.vue";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+html {
+  font-family: "Geologica", sans-serif;
+  background-color: #171820;
+  color: #FCFCFD;
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
 }
+
+body, h2, p, td {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2C3B;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #21232F;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  html {
+    display: block;
+  }
+}
+
 </style>

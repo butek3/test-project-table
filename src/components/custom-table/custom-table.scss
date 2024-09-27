@@ -1,0 +1,161 @@
+@import '@/styles/variables.scss';
+
+.custom-table {
+  max-width: 55.125rem;
+  border-radius: 12px;
+  background-color: $surface;
+  padding: 1.25rem 0.5rem 1.25rem 1.25rem;
+  position: relative;
+
+  &__container {
+    margin-right: 8px;
+  }
+
+  &__scroll-container {
+    max-height: 100vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+
+    &::-webkit-scrollbar-track {
+      margin-top: 1.5rem;
+      margin-left: -15px;
+    }
+  }
+
+  &__filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.75rem 1.25rem 0;
+
+
+    .filter-table__select {
+      padding: 1.25rem;
+      border-radius: 12px;
+      background-color: $surface-4;
+      border: none;
+      color: $secondary;
+    }
+  }
+
+  &__line {
+    background: $surface-3;
+  }
+
+  .active-line {
+    background-color: $surface-4;
+  }
+
+  .order-info-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__line-all {
+    background: $surface-3;
+  }
+
+  .last-line {
+    td:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+
+    td:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+  }
+
+  &__header-line {
+    td:first-child {
+      padding-left: 20px;
+    }
+
+    td:last-child {
+      padding-right: 20px;
+    }
+  }
+
+  .items-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__header {
+    padding: 0 20px 0 20px;
+  }
+}
+
+.header-text {
+  color: $caption;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.text-secondary {
+  color: $secondary;
+  font-weight: 300;
+}
+
+.text-caption {
+  color: $caption;
+  font-weight: 300;
+}
+
+.image-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  align-items: center;
+
+  &:before {
+    content: '+';
+    position: absolute;
+    font-size: 1rem;
+    font-weight: 300;
+    bottom: 0;
+    left: 0;
+    color: $green;
+  }
+}
+
+.active {
+  transform: rotateX(180deg);
+}
+
+.money:first-letter {
+  color: $orange;
+}
+
+table {
+  width: 100%;
+}
+
+.text-btn {
+  color: $orange;
+  margin-left: 0.5rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  font-weight: 300;
+}
+
+.text-base {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.text-xl {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .custom-table thead {
+    display: none;
+  }
+}
