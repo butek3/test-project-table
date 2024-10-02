@@ -7,15 +7,16 @@ import TransitionTable from "@/blocks/transactions-table/transactions-table.vue"
 
 </script>
 
-<style>
+<style lang="scss">
+@import '@/styles/variables.scss';
 
 html {
   font-family: "Geologica", sans-serif;
-  background-color: #171820;
-  color: #FCFCFD;
+  background-color: $surface-primary;
+  color: $primary;
   display: flex;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 6.25rem;
 }
 
 body, h2, p, td {
@@ -24,7 +25,7 @@ body, h2, p, td {
 }
 
 p {
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 500;
 }
 
@@ -33,21 +34,21 @@ table {
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 0.25rem;
 }
 
 ::-webkit-scrollbar-track {
   background: none;
-  width: 12px;
+  width: 0.75rem;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2A2C3B;
-  border-radius: 6px;
+  background: $surface-4;
+  border-radius: 0.375rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #21232F;
+  background: $surface-3;
   cursor: pointer;
 }
 

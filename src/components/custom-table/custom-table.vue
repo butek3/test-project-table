@@ -2,6 +2,7 @@
   <div class="custom-table">
     <div v-if="title && sorts" class="custom-table__filter">
       <h2 class="text-xl">{{ title }}</h2>
+
       <custom-select :options="sorts" />
     </div>
 
@@ -10,7 +11,7 @@
         <thead>
           <tr class="custom-table__header-line">
             <th v-for="(header, idx) in headers" :key="idx">
-              <slot name="header" :item="header" />
+              <slot :name="header" :item="header" />
             </th>
           </tr>
 
@@ -85,6 +86,7 @@ const props = defineProps({
 });
 
 const { transitionData } = toRefs(props)
+
 const items = ref([])
 
 items.value = transitionData.value.map(item => ({

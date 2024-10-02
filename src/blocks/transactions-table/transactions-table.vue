@@ -22,7 +22,7 @@
             <p class="money">${{ item.resultFinance.balanceAfter.before }}</p>
             <p :class="[ item.resultFinance.sum.isPlus ? 'red' : 'green'  ]"><strong>{{ item?.action }}</strong></p>
           </div>
-          <img :src="DropdownIcon" alt="" :class="{ active: item.isShowItem }" />
+          <img :src="DropdownIcon" alt="" :class="{ active: !item.isShowItem }" />
         </td>
       </tr>
 
@@ -653,7 +653,7 @@ const showAllItems = (item) => {
 };
 
 const currentBtnText = (item) => {
-  return item.isActive ? 'Show less' : 'Show all';
+  return item.isActive ? 'Show less' : 'Show more';
 };
 
 const showItems = (item) => {

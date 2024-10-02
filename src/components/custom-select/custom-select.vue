@@ -51,7 +51,7 @@ const selectedLabel = computed(() => selectedOption.value?.label);
 
 .custom-select {
   position: relative;
-  width: 139px;
+  width: 8.625rem;
 }
 
 .selected {
