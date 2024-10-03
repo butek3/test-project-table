@@ -1,14 +1,10 @@
 <template>
   <custom-table
-      :headers="headers"
-      :transitionData="transitionData"
+      :columns="columns"
+      :data="transitionData"
       :sorts="sorts"
       title="Transitions"
   >
-    <template #header="{ item }">
-      <p class="header-text">{{ item }}</p>
-    </template>
-
     <template #mobile="{ item }">
       <tr class="mobile-table__main-line text-base" @click="showItems(item)">
         <td>
@@ -27,7 +23,7 @@
       </tr>
 
       <tr :style="{ 'height': 0.5 + 'rem' }">
-        <td :colspan="headers.length" />
+        <td :colspan="columns.length" />
       </tr>
 
       <template v-if="item.isShowItem">
@@ -206,91 +202,98 @@
       </template>
 
       <tr v-if="item.isShowItem" :style="{ 'height': 0.5 + 'rem' }">
-        <td :colspan="headers.length" />
+        <td :colspan="columns.length" />
       </tr>
     </template>
 
-    <template #row="{ item }">
-      <td>
-        <div>
-          <p class="text">#{{ item?.orderId }}</p>
-          <span class="text-secondary text-xs">{{ item?.date }}</span>
-        </div>
-      </td>
-      <td class="text-secondary text-base">{{ item?.action }}</td>
-      <td>
-        <template v-if="item?.products.length === 1">
-          <div class="items-wrapper">
-            <div class="image-wrapper" :class="[ item?.isGetItem ? 'plus' : 'minus' ]">
-              <img :src="currentImage(item?.products)" :alt="products?.[0].name" class="image" />
-            </div>
-            <div>
-              <p>{{ item?.products[0].weaponName }}</p>
-              <p class="text-caption text-xs">{{ item?.products[0].skinName }} ({{ item?.products[0].quality }})</p>
-            </div>
-          </div>
-        </template>
-
-        <template v-else-if="item?.products.length > 1">
-          <div class="image-wrapper" :class="[ item?.isGetItem ? 'plus' : 'minus' ]">
-            <img :src="currentImage(item?.products)" alt="placeholder" class="image" />
-            <div class="btn-wrapper">
-              <span class="text-xs" >{{ item?.products.length }} items</span>
-              <button class="btn text-xs" @click="showAllItems(item)">
-                <div class="text-btn">{{ currentBtnText(item) }}</div>
-                <img :src="ArrowIcon" class="arrow" :class="{active: !item.isActive}" alt="arrow" />
-              </button>
-            </div>
-          </div>
-        </template>
-
-        <template v-else>
-          <span class="text-base">{{ item?.itemsStatus }}</span>
-        </template>
-      </td>
-      <td>
-        <p class="money text-base">${{ item?.resultFinance?.amount }}</p>
-      </td>
-      <td>
-        <div class="money-wrapper">
-          <p class="money text-base">${{ item?.resultFinance.sum.before }}</p>
-          <p class="change-money text-xs" :class="[ item.resultFinance.sum.isPlus ? 'plus-money' : 'minus-money' ]">${{ item?.resultFinance.sum.change }}</p>
-        </div>
-      </td>
-      <td>
-        <div class="money-wrapper">
-          <p class="money text-base">${{ item?.resultFinance.balanceAfter.before }}</p>
-          <p class="change-money text-xs" :class="[ item.resultFinance.balanceAfter.isPlus ? 'plus-money' : 'minus-money' ]">${{ item?.resultFinance.balanceAfter.change }}</p>
-        </div>
-      </td>
+    <template #data:info="{ item }">
+      <div>
+        <p class="text">#{{ item?.orderId }}</p>
+        <span class="text-secondary text-xs">{{ item?.date }}</span>
+      </div>
     </template>
 
-    <template #product-row="{ product }">
-      <td colspan="3">
-        <div class="order-info-wrapper">
+    <template #data:action="{ item }">
+      <p class="text-secondary text-base">{{ item?.action }}</p>
+    </template>
+
+    <template #data:deal="{ item }">
+      <template v-if="item?.products.length === 1">
+        <div class="items-wrapper">
           <div class="image-wrapper" :class="[ item?.isGetItem ? 'plus' : 'minus' ]">
-            <img :src="product.image" :alt="product.name" class="image" />
+            <img :src="currentImage(item?.products)" :alt="products?.[0].name" class="image" />
           </div>
           <div>
-            <p>{{ product?.weaponName }}</p>
-            <p class="text-caption text-xs">{{ product?.skinName }} ({{ product?.quality }})</p>
+            <p>{{ item?.products[0].weaponName }}</p>
+            <p class="text-caption text-xs">{{ item?.products[0].skinName }} ({{ item?.products[0].quality }})</p>
           </div>
         </div>
-      </td>
-      <td class="money text-base">${{ product.finance?.amount }}</td>
+      </template>
 
-      <td>
-        <div class="money-wrapper">
-          <p class="money text-base">${{ product?.finance.sum.before }}</p>
-          <p class="change-money text-xs" :class="[ product.finance.sum.isPlus ? 'plus-money' : 'minus-money' ]">${{ product?.finance.sum.change }}</p>
+      <template v-else-if="item?.products.length > 1">
+        <div class="image-wrapper" :class="[ item?.isGetItem ? 'plus' : 'minus' ]">
+          <img :src="currentImage(item?.products)" alt="placeholder" class="image" />
+          <div class="btn-wrapper">
+            <span class="text-xs" >{{ item?.products.length }} items</span>
+            <button class="btn text-xs" @click="showAllItems(item)">
+              <div class="text-btn">{{ currentBtnText(item) }}</div>
+              <img :src="ArrowIcon" class="arrow" :class="{active: !item.isActive}" alt="arrow" />
+            </button>
+          </div>
         </div>
-      </td>
-      <td>
-        <div class="money-wrapper">
-          <p class="money text-base">${{ product?.finance.balanceAfter.before }}</p>
-          <p class="change-money text-xs" :class="[ product.finance.balanceAfter.isPlus ? 'plus-money' : 'minus-money' ]">${{ product?.finance.balanceAfter.change }}</p>
+      </template>
+
+      <template v-else>
+        <span class="text-base">{{ item?.itemsStatus }}</span>
+      </template>
+    </template>
+
+    <template #data:amount="{ item }">
+      <p class="money text-base">${{ item?.resultFinance?.amount }}</p>
+    </template>
+
+    <template #data:balance="{ item }">
+      <div class="money-wrapper">
+        <p class="money text-base">${{ item?.resultFinance.sum.before }}</p>
+        <p class="change-money text-xs" :class="[ item.resultFinance.sum.isPlus ? 'plus-money' : 'minus-money' ]">${{ item?.resultFinance.sum.change }}</p>
+      </div>
+    </template>
+
+    <template #data:bonuses="{ item }">
+      <div class="money-wrapper">
+        <p class="money text-base">${{ item?.resultFinance.balanceAfter.before }}</p>
+        <p class="change-money text-xs" :class="[ item.resultFinance.balanceAfter.isPlus ? 'plus-money' : 'minus-money' ]">${{ item?.resultFinance.balanceAfter.change }}</p>
+      </div>
+    </template>
+
+    <template #collapse:deal="{ product }">
+      <div class="order-info-wrapper">
+        <div class="image-wrapper" :class="[ product?.isGetItem ? 'plus' : 'minus' ]">
+          <img :src="product.image" :alt="product.name" class="image" />
         </div>
-      </td>
+        <div>
+          <p>{{ product?.weaponName }}</p>
+          <p class="text-caption text-xs">{{ product?.skinName }} ({{ product?.quality }})</p>
+        </div>
+      </div>
+    </template>
+
+    <template #collapse:amount="{ product }">
+      <p class="money text-base">${{ product.finance?.amount }}</p>
+    </template>
+
+    <template #collapse:balance="{ product }">
+      <div class="money-wrapper">
+        <p class="money text-base">${{ product?.finance.sum.before }}</p>
+        <p class="change-money text-xs" :class="[ product.finance.sum.isPlus ? 'plus-money' : 'minus-money' ]">${{ product?.finance.sum.change }}</p>
+      </div>
+    </template>
+
+    <template #collapse:bonuses="{ product }">
+      <div class="money-wrapper">
+        <p class="money text-base">${{ product?.finance.balanceAfter.before }}</p>
+        <p class="change-money text-xs" :class="[ product.finance.balanceAfter.isPlus ? 'plus-money' : 'minus-money' ]">${{ product?.finance.balanceAfter.change }}</p>
+      </div>
     </template>
   </custom-table>
 </template>
@@ -306,18 +309,36 @@ import ArrowIcon from '@/assets/svg/arrow-icon.svg';
 import DropdownIcon from '@/assets/svg/dropdown-icon.svg';
 
 const sorts = ref([
-  { label: 'All' },
-  { label: 'Date' },
-  { label: 'Default' }
+  { label: 'All', value: 'all' },
+  { label: 'Date', value: 'date' },
+  { label: 'Default', value: 'default' }
 ]);
 
-const headers = ref([
-  'Информация',
-  'Действия',
-  'Сделка',
-  'Сумма',
-  'Баланс',
-  'Бонус',
+const columns = ref([
+  {
+    name: 'Информация',
+    key: 'info'
+  },
+  {
+    name: 'Действия',
+    key: 'action'
+  },
+  {
+    name: 'Сделка',
+    key: 'deal'
+  },
+  {
+    name: 'Сумма',
+    key: 'amount'
+  },
+  {
+    name: 'Баланс',
+    key: 'balance'
+  },
+  {
+    name: 'Бонус',
+    key: 'bonuses'
+  }
 ])
 
 const data = ref([
@@ -354,12 +375,12 @@ const data = ref([
       sum: {
         before: 1500,
         change: 111,
-        isPlus: true
+        isPlus: false
       },
       balanceAfter: {
         before: 1500,
         change: 111,
-        isPlus: false
+        isPlus: true
       },
     },
   },
@@ -496,7 +517,7 @@ const data = ref([
       sum: {
         before: 1500,
         change: 111,
-        isPlus: true
+        isPlus: false
       },
       balanceAfter: {
         before: 1500,
@@ -588,7 +609,7 @@ const data = ref([
     },
   },
   {
-    action: 'Buy',
+    action: 'Convert',
     orderId: 111116,
     date: '12.07.2023 20:54',
     itemsStatus: 'products',
@@ -653,7 +674,7 @@ const showAllItems = (item) => {
 };
 
 const currentBtnText = (item) => {
-  return item.isActive ? 'Show less' : 'Show more';
+  return item.isActive ? 'Show less' : 'Show all';
 };
 
 const showItems = (item) => {

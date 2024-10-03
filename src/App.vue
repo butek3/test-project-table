@@ -19,7 +19,7 @@ html {
   padding-top: 6.25rem;
 }
 
-body, h2, p, td {
+body, h2, p, td, th {
   margin: 0;
   padding: 0;
 }

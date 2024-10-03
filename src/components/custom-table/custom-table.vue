@@ -10,13 +10,15 @@
       <table class="custom-table__wrapper">
         <thead>
           <tr class="custom-table__header-line">
-            <th v-for="(header, idx) in headers" :key="idx">
-              <slot :name="header" :item="header" />
+            <th v-for="({ name, key }, idx) in columns" :key="idx">
+              <slot :name="`header:${key}`" :item="name">
+                <p class="header-text">{{ name }}</p>
+              </slot>
             </th>
           </tr>
 
           <tr :style="{ 'height': computedLineSpace + 'rem' }">
-            <td :colspan="headers.length" />
+            <td :colspan="columns.length" />
           </tr>
         </thead>
 
@@ -27,27 +29,42 @@
         </tbody>
 
         <tbody v-else>
-          <template v-for="(item, index) in transitionData" :key="index">
+          <template v-for="(item, index) in data" :key="index">
             <tr class="custom-table__line" :class="{ 'active-line': item.isActive } ">
-              <slot name="row" :item="item" :index="index" />
+              <slot name="row" :item="item" :index="index">
+                <td v-for="{ key } in columns" :key="`data:${ key }`">
+                  <slot :name="`data:${ key }`" :item="item" :index="index">
+                    {{ item[key] }}
+                  </slot>
+                </td>
+              </slot>
             </tr>
 
-            <tr v-if="!item.isActive && transitionData.length !== index+1" :style="{ 'height': computedLineSpace + 'rem' }">
-              <td :colspan="headers.length" />
+            <tr v-if="!item.isActive && data.length !== index+1" :style="{ 'height': computedLineSpace + 'rem' }">
+              <td :colspan="columns.length" />
             </tr>
 
             <template v-if="item.isActive">
               <tr
-                  v-for="(product, idx) in item?.products"
-                  class="custom-table__line-all"
-                  :class="{ 'last-line': item.products.length === idx+1 }"
-                  :key="'product-' + idx"
+                v-for="(product, idx) in item?.products"
+                class="custom-table__line-all"
+                :class="{
+                  'last-line': item.products.length === idx+1,
+                  'first-line': idx === 0
+                }"
+                :key="'product-' + idx"
               >
-                <slot name="product-row" :product="product" />
+                <slot name="collapse-row" :product="product">
+                  <td v-for="{ key } in columns" :key="`collapse:${ key }`">
+                    <slot :name="`collapse:${ key }`" :product="product">
+                      {{ product[key] }}
+                    </slot>
+                  </td>
+                </slot>
               </tr>
 
               <tr :style="{ 'height': computedLineSpace + 'rem' }">
-                <td :colspan="headers.length" />
+                <td :colspan="columns.length" />
               </tr>
             </template>
           </template>
@@ -63,11 +80,11 @@ import { defineProps, ref, toRefs } from 'vue';
 import CustomSelect from '@/components/custom-select/custom-select.vue';
 
 const props = defineProps({
-  headers: {
+  columns: {
     type: Array,
     default: () => []
   },
-  transitionData: {
+  data: {
     type: Array,
     default: () => []
   },
@@ -85,11 +102,11 @@ const props = defineProps({
   }
 });
 
-const { transitionData } = toRefs(props)
+const { data } = toRefs(props)
 
 const items = ref([])
 
-items.value = transitionData.value.map(item => ({
+items.value = data.value.map(item => ({
   ...item,
   isShowItem: false
 }));
@@ -105,21 +122,3 @@ window.addEventListener('resize', () => {
 </script>
 
 <style lang="scss" src="./custom-table.scss" scoped />
-
-<style lang="scss" scoped>
-p {
-  margin: 0;
-}
-button {
-  font-family: "Geologica", sans-serif;
-  border: none;
-  padding: 0;
-  background: none;
-}
-
-button:hover {
-  opacity: 0.9;
-  cursor: pointer;
-
-}
-</style>
