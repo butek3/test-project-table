@@ -18,7 +18,7 @@
             <p class="money">${{ item.resultFinance.balanceAfter.before }}</p>
             <p :class="[ item.resultFinance.sum.isPlus ? 'red' : 'green'  ]"><strong>{{ item?.action }}</strong></p>
           </div>
-          <img :src="DropdownIcon" alt="" :class="{ active: !item.isShowItem }" />
+          <dropdown-icon :class="{ active: !item.isShowItem }" />
         </td>
       </tr>
 
@@ -81,7 +81,7 @@
                   <span class="text-xs" >{{ item?.products.length }} items</span>
                   <button class="text-btn text-xs" >
                     <span class="text"> {{ currentBtnText(item) }} </span>
-                    <img :src="ArrowIcon" class="arrow" :class="{active: !item.isActive}" alt="arrow" />
+                    <dropdown-icon :class="{active: !item.isActive}" class="arrow orange" />
                   </button>
                 </div>
               </div>
@@ -237,7 +237,7 @@
             <span class="text-xs" >{{ item?.products.length }} items</span>
             <button class="btn text-xs" @click="showAllItems(item)">
               <div class="text-btn">{{ currentBtnText(item) }}</div>
-              <img :src="ArrowIcon" class="arrow" :class="{active: !item.isActive}" alt="arrow" />
+              <dropdown-icon class="arrow orange" :class="{active: !item.isActive}"/>
             </button>
           </div>
         </div>
@@ -305,7 +305,6 @@ import CustomTable from "@/components/custom-table/custom-table.vue";
 
 import TestImage from '@/assets/icons/test-image.png';
 import PlaceholderImage from '@/assets/icons/placeholder-image.png';
-import ArrowIcon from '@/assets/svg/arrow-icon.svg';
 import DropdownIcon from '@/assets/svg/dropdown-icon.svg';
 
 const sorts = ref([

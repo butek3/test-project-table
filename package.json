@@ -23,7 +23,8 @@
     "eslint-plugin-vue": "^8.0.3",
     "node-sass": "^9.0.0",
     "sass-loader": "^16.0.1",
-    "vue-svg-loader": "^0.16.0"
+    "vue-loader": "^17.0.0",
+    "svg-vue3-loader": "^1.0.2"
   },
   "eslintConfig": {
     "root": true,

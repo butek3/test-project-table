@@ -2,10 +2,10 @@
   <div class="custom-select text-secondary text-base">
     <div class="selected" @click="toggleDropdown">
       <div>
-        <img :src="SortIcon" class="selected-image" :class="{ active: isOpen }" alt="Sort" />
+        <sort-icon class="selected-image" :class="{ active: isOpen }" />
         <span>{{ selectedLabel }}</span>
       </div>
-      <img :src="ArrowIcon" class="icon-arrow" :class="{ active: !isOpen }" alt="Arrow" />
+      <dropdown-icon class="icon-arrow" :class="{ active: !isOpen }" />
     </div>
 
     <div v-if="isOpen" class="dropdown">
@@ -22,7 +22,7 @@
 import { ref, defineProps, computed } from 'vue';
 
 import SortIcon from '@/assets/svg/sorts-icon.svg'
-import ArrowIcon from '@/assets/svg/dropdown-icon.svg'
+import DropdownIcon from '@/assets/svg/dropdown-icon.svg'
 
 const props = defineProps({
   options: {
